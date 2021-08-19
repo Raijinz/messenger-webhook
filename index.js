@@ -16,6 +16,8 @@ app.post('/webhook', (req, res) => {
       let sender_psid = webhook_event.sender.id
       console.log('Sender PSID: ' + sender_psid)
 
+      console.log(callUserProfileAPI(sender_psid))
+
       if (webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message)
       } else if (webhook_event.postback) {
@@ -113,5 +115,22 @@ async function callSendAPI(sender_psid, response) {
     console.log('Message sent to: ' + sendAPIRes.data['recipient_id'])
   } catch (sendAPIErr) {
     console.error("Unable to send message: " + sendAPIErr)
+  }
+}
+
+async function callUserProfileAPI(sender_psid) {
+  try {
+    const userProfileRes = await axios({
+      url: `/${sender_psid}`,
+      method: 'GET',
+      baseURL: 'https://graph.facebook.com/v11.0/',
+      params: {
+        "fields": 'id,name,profile_pic'
+      }
+    })
+    return userProfileRes.data
+  } catch (userProfileError) {
+    console.error(userProfileError)
+    return {}
   }
 }
