@@ -10,13 +10,13 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening.'))
 app.post('/webhook', (req, res) => {
   let body = req.body
   if (body.object === 'page') {
-    body.entry.forEach(function(entry) {
+    body.entry.forEach(async function(entry) {
       let webhook_event = entry.messaging[0]
       console.log(webhook_event)
       let sender_psid = webhook_event.sender.id
       console.log('Sender PSID: ' + sender_psid)
 
-      console.log(callUserProfileAPI(sender_psid))
+      console.log(await callUserProfileAPI(sender_psid))
 
       if (webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message)
@@ -24,7 +24,6 @@ app.post('/webhook', (req, res) => {
         handlePostback(sender_psid, webhook_event.postback)
       }
     })
-
 
     res.status(200).send('EVENT_RECEIVED')
   } else {
@@ -125,7 +124,8 @@ async function callUserProfileAPI(sender_psid) {
       method: 'GET',
       baseURL: 'https://graph.facebook.com/v11.0/',
       params: {
-        "fields": 'id,name,profile_pic'
+        "fields": 'id,name,profile_pic',
+        "access_token": PAGE_ACCESS_TOKEN
       }
     })
     return userProfileRes.data
