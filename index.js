@@ -61,10 +61,7 @@ function handleMessage(sender_psid, received_message) {
               "type": "web_url",
               "title": "Webview",
               "url": FACEBOOK_MESSENGER_WEBVIEW_URL,
-              "webview_height_ratio": "full",
-              "messenger_extensions": true,
-              "fallback_url": "https://www.facebook.com/",
-              "webview_share_button": "hide"
+              "messenger_extensions": true
             }
           ]
         }
