@@ -48,8 +48,27 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
   let response
   if (received_message.text) {
+    const FACEBOOK_MESSENGER_WEBVIEW_URL =
+      process.env.FACEBOOK_MESSENGER_WEBVIEW_URL
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "button",
+          "text": "Try this!",
+          "buttons": [
+            {
+              "type": "web_url",
+              "title": "Webview",
+              "url": FACEBOOK_MESSENGER_WEBVIEW_URL,
+              "webview_height_ratio": "full",
+              "messenger_extensions": true,
+              "fallback_url": "https://www.messenger.com/",
+              "webview_share_button": "hide"
+            }
+          ]
+        }
+      }
     }
   } else if (received_message.attachments) {
     let attachment_url = received_message.attachments[0].payload.url
