@@ -48,22 +48,44 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
   let response
   if (received_message.text) {
+    const text = received_message.text
     const FACEBOOK_MESSENGER_WEBVIEW_URL =
       process.env.FACEBOOK_MESSENGER_WEBVIEW_URL
-    response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "button",
-          "text": "Try this!",
-          "buttons": [
-            {
-              "type": "web_url",
-              "title": "Webview",
-              "url": FACEBOOK_MESSENGER_WEBVIEW_URL,
-              "messenger_extensions": true
-            }
-          ]
+
+    if (text === '@activate') {
+      response = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "button",
+            "text": "Activate here",
+            "buttons": [
+              {
+                "type": "web_url",
+                "title": "Activate webview",
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/activate`,
+                "messenger_extensions": true
+              }
+            ]
+          }
+        }
+      }
+    } else {
+      response = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "button",
+            "text": "Try this!",
+            "buttons": [
+              {
+                "type": "web_url",
+                "title": "Webview",
+                "url": FACEBOOK_MESSENGER_WEBVIEW_URL,
+                "messenger_extensions": true
+              }
+            ]
+          }
         }
       }
     }
