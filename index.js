@@ -1,5 +1,5 @@
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
-const VERITY_TOKEN = process.env.VERITY_TOKEN
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN
 
 const { default: axios } = require('axios')
 const express = require('express')
@@ -36,7 +36,7 @@ app.get('/webhook', (req, res) => {
   let token = req.query['hub.verify_token']
   let challenge = req.query['hub.challenge']
   if (mode && token) {
-    if (mode === 'subscribe' && token === VERITY_TOKEN) {
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       console.log('WEBHOOK_VERIFIED')
       res.status(200).send(challenge)
     } else {
@@ -63,7 +63,7 @@ function handleMessage(sender_psid, received_message) {
               {
                 "type": "web_url",
                 "title": "Activate webview",
-                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/activate`,
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/activateCard`,
                 "messenger_extensions": true
               }
             ]
@@ -76,12 +76,24 @@ function handleMessage(sender_psid, received_message) {
           "type": "template",
           "payload": {
             "template_type": "button",
-            "text": "Try this!",
+            "text": "Webview test",
             "buttons": [
               {
                 "type": "web_url",
-                "title": "Webview",
-                "url": FACEBOOK_MESSENGER_WEBVIEW_URL,
+                "title": "Register Campaign",
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/registerCampaign`,
+                "messenger_extensions": true
+              },
+              {
+                "type": "web_url",
+                "title": "Register by Agent",
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/registerByAgent`,
+                "messenger_extensions": true
+              },
+              {
+                "type": "web_url",
+                "title": "Verify by Agent",
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/verifyByAgent`,
                 "messenger_extensions": true
               }
             ]
