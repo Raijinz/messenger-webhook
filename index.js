@@ -67,8 +67,8 @@ function handleMessage(sender_psid, received_message) {
             "buttons": [
               {
                 "type": "web_url",
-                "title": "Activate webview",
-                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/activate`,
+                "title": "Activate card",
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/activateCard`,
                 "messenger_extensions": true
               }
             ]
@@ -85,20 +85,20 @@ function handleMessage(sender_psid, received_message) {
             "buttons": [
               {
                 "type": "web_url",
-                "title": "Webview",
-                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}`,
+                "title": "Register campaign",
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/registerCampaign`,
                 "messenger_extensions": true
               },
               {
                 "type": "web_url",
-                "title": "Register",
-                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/register`,
+                "title": "Register by agent",
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/registerByAgent`,
                 "messenger_extensions": true
               },
               {
                 "type": "web_url",
-                "title": "Error",
-                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/error`,
+                "title": "Verify by agent",
+                "url": `${FACEBOOK_MESSENGER_WEBVIEW_URL}/verifyByAgent`,
                 "messenger_extensions": true
               }
             ]
